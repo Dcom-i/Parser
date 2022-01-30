@@ -1,4 +1,6 @@
-package com.pars;
+package com.pars.comparators;
+
+import com.pars.Parser;
 
 import java.util.Comparator;
 
