@@ -6,11 +6,12 @@ public class Bash {
 
     public static void main(String[] args) throws Exception {
         String reset = "Y";
-        run(reset);
+        Scanner scan = new Scanner(System.in);
+        run(reset, scan);
     }
 
-    private static void run(String reset) throws Exception {
-        Scanner scan = new Scanner(System.in);
+    private static void run(String reset, Scanner scan) throws Exception {
+        BashClient bashClient = new BashClient();
         while (reset.equalsIgnoreCase("Y")) {
             try {
                 System.out.println("Please, enter the mode of parser\n Mode 1 - Input the number of page and select the sort \n Mode 2 - enter the ID of quote");
@@ -23,20 +24,18 @@ public class Bash {
                     int page = scan.nextInt();
                     System.out.print("Please select the mode of sort\n Sort by: 0-none_sort | 1-vote_up | 2-vote_down | 3-id_up | 4-id_down | 5-date_up | 6-date_down - ");
                     int choise = scan.nextInt();
-                    GetCont getcont = new GetCont(page, choise);
+                    GetCont getcont = new GetCont(page, choise, bashClient);
                     getcont.parsing();
-                } else if (var == 2) {
+                } else {
                     System.out.print("Input the ID of quote - ");
                     int idquote = scan.nextInt();
-                    GetContentById getcontentbyid = new GetContentById(idquote);
-                    getcontentbyid.ParsingQuote();
+                    GetContentById getContentById = new GetContentById(idquote, bashClient);
+                    getContentById.ParsingQuote();
                 }
             } catch (IllegalArgumentException i) {
                 System.out.print("You enter the wrong number of mode, want continue? Enter - 'Y' - (continue)  or 'n' to exit - ");
                 reset = scan.next();
-                if (reset.equalsIgnoreCase("Y")) {
-                    run(reset);
-                }
+
             }
         }
     }
